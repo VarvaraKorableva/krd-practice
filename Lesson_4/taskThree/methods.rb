@@ -11,14 +11,11 @@ def display_results
 end
 
 def check_file
-  if File.exist?($BALANCE)
-    puts "Файл существует."
-    display_results
-  else
-    puts "Файл не существует."
-    #$balance = 100.00
-    puts "Ваш баланс:" + $balance
+  unless File.exist?($BALANCE)
+     File.open($BALANCE, 'w')
+     File.write($BALANCE, $balance)
   end
+  display_results
 end  
 
 def increase_balance(sum) 
@@ -83,4 +80,3 @@ def start
 end  
   
 start
-
