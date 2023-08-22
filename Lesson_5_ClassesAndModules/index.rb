@@ -20,6 +20,7 @@ def change_balance(data)
 end
 
 def actions(cash_machine)
+  loop do
     puts "Для внесения денег нажмите D, \nДля снятия средств нажмите W, \nДля проверки баланса нажмите B, \nДля выхода нажмите Q"
     action = gets.chomp.upcase
     case action
@@ -55,10 +56,12 @@ def actions(cash_machine)
       cash_machine.display_results
     when 'Q'
       puts 'Вы выбрали выход из программы'
+      break
     else
       puts 'Введен некорректный симвом символ'
     end 
   end
+end
 
 def start 
   cash_machine = CashMachine.new(check_file)
