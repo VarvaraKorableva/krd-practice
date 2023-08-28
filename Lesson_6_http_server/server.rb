@@ -1,3 +1,4 @@
+
 require "socket"
 require "../Lesson_5_ClassesAndModules/CashMachine.rb"
 
@@ -8,7 +9,12 @@ while connection = server.accept
 
   method, full_path, protocol = request.split(" ")
   path, params = full_path.split("?")
-  params = params.split("&").map { |pair| pair.split("=")}.to_h
+
+  if params
+    params = params.split("&").map { |pair| pair.split("=")}.to_h
+  else
+    params = {}
+  end
 
   puts method
   puts path
@@ -21,18 +27,16 @@ while connection = server.accept
     "Hello, world!"
   when "/user"
     "Hello, user!"
-
   when "/balance"
     cash_machine = CashMachine.new(500) 
-    "#{cash_machine.current_balance}"
-
+    
     case params["method"]
     when "deposit"
       cash_machine.increase_balance(params["value"])
     when "withdraw" 
-      cash_machine.decrease_balance(params["value"])      
-    #else    
-      #cash_machine.current_balance
+      cash_machine.decrease_balance(params["value"])    
+    else
+        "#{cash_machine.current_balance}"
     end 
   else
     "404"
